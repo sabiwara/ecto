@@ -913,6 +913,14 @@ defmodule Ecto.Changeset.HasAssocTest do
 
   ## Other
 
+  test "validate_required/3 with has_many raises" do
+    base_changeset = Changeset.change(%Author{})
+
+    assert_raise ArgumentError, ~r/attempting to validate has_many association :posts/, fn ->
+      Changeset.validate_required(base_changeset, :posts)
+    end
+  end
+
   test "put_assoc/4 with has_one" do
     base_changeset = Changeset.change(%Author{})
 

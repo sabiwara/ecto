@@ -536,6 +536,14 @@ defmodule Ecto.Changeset.EmbeddedTest do
 
   ## Others
 
+  test "validate_required/3 with has_many raises" do
+    base_changeset = Changeset.change(%Author{})
+
+    assert_raise ArgumentError, ~r/attempting to validate embed_many field/, fn ->
+      Changeset.validate_required(base_changeset, :posts)
+    end
+  end
+
   test "change embeds_one" do
     embed = Author.__schema__(:embed, :profile)
 
