@@ -41,7 +41,13 @@ defmodule Ecto.MixProject do
 
   defp package do
     [
-      maintainers: ["Eric Meadows-Jönsson", "José Valim", "James Fish", "Michał Muskała", "Felipe Stival"],
+      maintainers: [
+        "Eric Meadows-Jönsson",
+        "José Valim",
+        "James Fish",
+        "Michał Muskała",
+        "Felipe Stival"
+      ],
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @source_url},
       files:
@@ -77,7 +83,7 @@ defmodule Ecto.MixProject do
         # Ecto.Schema.Metadata,
         # Mix.Ecto,
 
-        "Types": [
+        Types: [
           Ecto.Enum,
           Ecto.ParameterizedType,
           Ecto.Type,
@@ -133,7 +139,7 @@ defmodule Ecto.MixProject do
 
   defp groups_for_extras do
     [
-      "Introduction": ~r/guides\/introduction\/.?/,
+      Introduction: ~r/guides\/introduction\/.?/,
       "How-To's": ~r/guides\/howtos\/.?/
     ]
   end

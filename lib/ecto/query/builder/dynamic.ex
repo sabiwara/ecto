@@ -8,20 +8,22 @@ defmodule Ecto.Query.Builder.Dynamic do
   @doc """
   Builds a dynamic expression.
   """
-  @spec build([Macro.t], Macro.t, Macro.Env.t) :: Macro.t
+  @spec build([Macro.t()], Macro.t(), Macro.Env.t()) :: Macro.t()
   def build(binding, expr, env) do
     {query, vars} = Builder.escape_binding(quote(do: query), binding, env)
     {expr, {params, acc}} = Builder.escape(expr, :any, {[], %{subqueries: []}}, vars, env)
     params = Builder.escape_params(params)
 
     quote do
-      %Ecto.Query.DynamicExpr{fun: fn query ->
-                                _ = unquote(query)
-                                {unquote(expr), unquote(params), unquote(acc.subqueries)}
-                              end,
-                              binding: unquote(Macro.escape(binding)),
-                              file: unquote(env.file),
-                              line: unquote(env.line)}
+      %Ecto.Query.DynamicExpr{
+        fun: fn query ->
+          _ = unquote(query)
+          {unquote(expr), unquote(params), unquote(acc.subqueries)}
+        end,
+        binding: unquote(Macro.escape(binding)),
+        file: unquote(env.file),
+        line: unquote(env.line)
+      }
     end
   end
 
@@ -75,7 +77,9 @@ defmodule Ecto.Query.Builder.Dynamic do
       {:subquery, i}, {binding, params, subqueries, count} ->
         subquery = Enum.fetch!(dynamic_subqueries, i)
         ix = length(subqueries)
-        {{:subquery, ix}, {binding, [{:subquery, ix} | params], [subquery | subqueries], count + 1}}
+
+        {{:subquery, ix},
+         {binding, [{:subquery, ix} | params], [subquery | subqueries], count + 1}}
 
       expr, acc ->
         {expr, acc}
