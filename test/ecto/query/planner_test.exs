@@ -1020,7 +1020,7 @@ defmodule Ecto.Query.PlannerTest do
     end
 
     assert_raise Ecto.QueryError, fn ->
-      Comment |> where([c], c.text == '123') |> normalize()
+      Comment |> where([c], c.text == ~c"123") |> normalize()
     end
   end
 

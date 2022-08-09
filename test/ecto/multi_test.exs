@@ -237,10 +237,10 @@ defmodule Ecto.MultiTest do
 
     multi =
       Multi.new()
-      |> Multi.run('myFunction', fun)
+      |> Multi.run(~c"myFunction", fun)
 
-    assert multi.names == MapSet.new(['myFunction'])
-    assert multi.operations == [{'myFunction', {:run, fun}}]
+    assert multi.names == MapSet.new([~c"myFunction"])
+    assert multi.operations == [{~c"myFunction", {:run, fun}}]
   end
 
   test "run with mfa" do
